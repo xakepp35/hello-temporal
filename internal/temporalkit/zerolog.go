@@ -14,38 +14,46 @@ func NewZerolog(log *zerolog.Logger) *Zerolog {
 	}
 }
 
-func (s *Zerolog) Debug(msg string, keyvals ...interface{}) {
+func (s *Zerolog) Debug(msg string, keyvals ...any) {
 	if s.log == nil {
 		return
 	}
+	event := s.log.Debug()
 	for i := 0; i < len(keyvals); i += 2 {
-		s.log.Debug().Any(keyvals[0].(string), keyvals[1])
+		event = event.Any(keyvals[i].(string), keyvals[i+1])
 	}
+	event.Msg(msg)
 }
 
-func (s *Zerolog) Info(msg string, keyvals ...interface{}) {
+func (s *Zerolog) Info(msg string, keyvals ...any) {
 	if s.log == nil {
 		return
 	}
+	event := s.log.Info()
 	for i := 0; i < len(keyvals); i += 2 {
-		s.log.Info().Any(keyvals[0].(string), keyvals[1])
+		event = event.Any(keyvals[i].(string), keyvals[i+1])
 	}
+	event.Msg(msg)
 }
 
-func (s *Zerolog) Warn(msg string, keyvals ...interface{}) {
+func (s *Zerolog) Warn(msg string, keyvals ...any) {
 	if s.log == nil {
 		return
 	}
+	event := s.log.Warn()
 	for i := 0; i < len(keyvals); i += 2 {
-		s.log.Warn().Any(keyvals[0].(string), keyvals[1])
+		event = event.Any(keyvals[i].(string), keyvals[i+1])
 	}
+	event.Msg(msg)
 }
 
-func (s *Zerolog) Error(msg string, keyvals ...interface{}) {
+func (s *Zerolog) Error(msg string, keyvals ...any) {
 	if s.log == nil {
 		return
 	}
+	event := s.log.Error()
 	for i := 0; i < len(keyvals); i += 2 {
-		s.log.Error().Any(keyvals[0].(string), keyvals[1])
+		event = event.Any(keyvals[i].(string), keyvals[i+1])
 	}
+	event.Msg(msg)
 }
